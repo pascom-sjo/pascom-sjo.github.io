@@ -4,52 +4,118 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MiguelAngelus — Projeção para a Missa</title>
-<meta name="description" content="MiguelAngelus: aplicativo gratuito para Windows que projeta a Missa no telão — folheto, cantos, leituras, orações e vídeos. Feito pela PASCOM da Paróquia São José Operário.">
+<meta name="description" content="MiguelAngelus: aplicativo gratuito para Windows que projeta a Missa no telão — folheto, cantos com cifras, leituras, orações, celular, câmeras e transmissão. Feito pela PASCOM da Paróquia São José Operário (RJ).">
+<!-- prévia ao compartilhar o link (WhatsApp, Facebook…) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="MiguelAngelus — Projeção para a Missa">
+<meta property="og:description" content="Gratuito, em português, feito por uma PASCOM para as PASCOMs. Baixe a versão mais nova para Windows.">
+<meta property="og:image" content="https://pascom-sjo.github.io/img/compartilhar.png">
+<meta property="og:url" content="https://pascom-sjo.github.io/">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/icone-256.png">
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 <header class="topo"><div class="dentro">
   <img src="img/icone-256.png" alt="">
   <div class="nome"><b>Miguel</b>Angelus</div>
-  <nav><a href="index.html" class="atual">Início</a><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a></nav>
+  <nav><a href="index.html" class="atual">Início</a><a href="#recursos">Recursos</a><a href="#instalar">Instalar</a><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a></nav>
 </div></header>
 
 <main>
   <section class="destaque">
     <div>
       <h1>Projeção para a Missa, simples e feita para a liturgia católica</h1>
-      <p>O MiguelAngelus é um aplicativo para Windows que a equipe de comunicação (PASCOM) usa para projetar a Missa no telão:
-        lê o folheto da semana e monta o roteiro com cantos, leituras, salmo, orações e avisos.</p>
+      <p>O MiguelAngelus é um aplicativo <b>gratuito</b> para Windows que a PASCOM usa para projetar a Missa no telão:
+        lê o folheto da semana e monta o roteiro com cantos, leituras, salmo, orações e avisos — e o telão pode ser
+        controlado pelo celular.</p>
+      <div class="botoes">
+        <a class="baixar" href="https://github.com/dobylucky78-droid/miguelangelus/releases/latest/download/Instalar-MiguelAngelus.exe">⬇ Baixar para Windows</a>
+        <a class="sec" href="#instalar">Como instalar</a>
+      </div>
+      <p class="pequeno sutil">Sempre a versão mais nova · Windows 10 e 11 · instalador assinado digitalmente · as próximas
+        versões chegam sozinhas pelo próprio programa.</p>
     </div>
-    <img src="img/logo.svg" alt="Logotipo do MiguelAngelus">
+    <figure class="tela-principal"><img src="img/tela.webp" alt="Tela do MiguelAngelus com o roteiro de uma Missa de exemplo" loading="eager">
+      <figcaption>A tela do operador: o roteiro da Missa à direita, os slides no meio e o telão ao vivo no alto.</figcaption></figure>
   </section>
 
-  <div class="cartoes">
-    <div class="cartao"><h3>📄 Roteiro a partir do folheto</h3><p>Lê o folheto da Missa (PDF, Word ou texto) e monta o roteiro inteiro, com as falas do padre e do povo.</p></div>
-    <div class="cartao"><h3>🎵 Cantos e orações</h3><p>Banco de cantos da paróquia organizado por momento da Missa, e orações por categoria.</p></div>
-    <div class="cartao"><h3>📖 Bíblia e liturgia do dia</h3><p>Bíblia católica com 73 livros, calendário litúrgico e as leituras das Missas de semana.</p></div>
-    <div class="cartao"><h3>🎬 Vídeos, áudios e câmeras</h3><p>Toca vídeos e áudios das pastas do computador e mostra câmeras ao vivo no telão.</p></div>
-    <div class="cartao"><h3>📡 Transmissão</h3><p>Envia a faixa com as letras para o OBS, por cima da câmera da transmissão.</p></div>
-    <div class="cartao"><h3>☁ Vários computadores</h3><p>Opcionalmente, guarda roteiros e cantos no Google Drive da própria paróquia para usar em outras capelas.</p></div>
-  </div>
+  <section id="recursos">
+    <h2 class="secao">O que ele faz</h2>
+    <div class="cartoes">
+      <div class="cartao"><h3>📄 Roteiro a partir do folheto</h3><p>Lê o folheto da Missa (PDF, Word ou texto) — ou baixa o da sua arquidiocese — e monta o roteiro inteiro, com as falas do padre e do povo.</p></div>
+      <div class="cartao"><h3>🎵 Cantos com cifras</h3><p>Cantos por momento da Missa, refrão repetido sozinho, cantado ou rezado (Glória, Sequências, Ladainhas) e cifras para os músicos.</p></div>
+      <div class="cartao"><h3>📖 Bíblia e liturgia</h3><p>Bíblia católica completa já incluída, calendário litúrgico com santos, cor do tempo, Terço, Ângelus e as partes fixas da Missa.</p></div>
+      <div class="cartao"><h3>📱 Controle pelo celular</h3><p>Leia o QR code e passe os slides andando pela igreja. Os músicos veem a cifra que acompanha o telão, no tom do instrumento.</p></div>
+      <div class="cartao"><h3>🎨 Telão do seu jeito</h3><p>Temas (inclusive pela cor do tempo litúrgico), perfis para cada operador, brasão e padroeiro nos cantos da tela.</p></div>
+      <div class="cartao"><h3>📷 Câmeras e joysticks</h3><p>Câmera ao vivo no telão e câmeras PTZ com posições prontas — pelo computador, pelo celular ou por um joystick USB.</p></div>
+      <div class="cartao"><h3>📡 Transmissão</h3><p>Faixa com as letras para o OBS (NDI), por cima da câmera da transmissão — inclusive o QR code do Pix da paróquia.</p></div>
+      <div class="cartao"><h3>☁ Vários computadores</h3><p>Opcionalmente, guarda tudo no Google Drive da própria paróquia para usar na Matriz e nas capelas.</p></div>
+    </div>
+  </section>
 
-  <div class="texto">
+  <section>
+    <h2 class="secao">Veja como fica</h2>
+    <p class="sutil centro">Fotos com uma paróquia <b>de exemplo</b> (o canto é fictício; o Evangelho é da Bíblia de domínio público que vem com o programa).</p>
+    <div class="galeria">
+      <figure><img src="img/telao_canto.webp" alt="Telão com um canto" loading="lazy"><figcaption>Canto no telão, com o brasão e o logo nos cantos.</figcaption></figure>
+      <figure><img src="img/telao_evangelho.webp" alt="Telão com o Evangelho" loading="lazy"><figcaption>Leitura com o número dos versículos.</figcaption></figure>
+      <figure><img src="img/telao_gloria.webp" alt="Telão no tema do tempo litúrgico" loading="lazy"><figcaption>Tema pela cor do tempo litúrgico.</figcaption></figure>
+      <figure><img src="img/ajustes_aparencia.webp" alt="Ajustes da aparência do telão" loading="lazy"><figcaption>Fonte, tamanho, cores e perfis de cada operador.</figcaption></figure>
+    </div>
+    <div class="galeria celulares">
+      <figure><img src="img/celular_controle.webp" alt="Controle pelo celular" loading="lazy"><figcaption>📱 Controle pelo celular.</figcaption></figure>
+      <figure><img src="img/celular_musico.webp" alt="Cifras para os músicos no celular" loading="lazy"><figcaption>🎸 Cifras para os músicos, acompanhando o telão.</figcaption></figure>
+    </div>
+    <div class="galeria">
+      <figure><img src="img/ajustes_joystick.webp" alt="Configuração do joystick" loading="lazy"><figcaption>🎮 Joystick para as câmeras PTZ: o botão apertado acende no desenho.</figcaption></figure>
+      <figure><img src="img/agenda.webp" alt="Agenda da paróquia" loading="lazy"><figcaption>📅 Agenda: as celebrações da semana viram roteiros prontos.</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="instalar" class="texto">
+    <h2 style="margin-top:0">Como instalar</h2>
+    <ol class="passos">
+      <li><a href="https://github.com/dobylucky78-droid/miguelangelus/releases/latest/download/Instalar-MiguelAngelus.exe"><b>Baixe o instalador</b></a> (Instalar-MiguelAngelus.exe).</li>
+      <li>Abra o arquivo e siga o instalador. Ele é assinado digitalmente por <i>Open Source Developer Marcio Aurelio Rios Martins</i>.</li>
+      <li>Abra o <b>MiguelAngelus</b> pelo ícone. Com um segundo monitor ou projetor ligado, a janela do telão vai sozinha para ele.</li>
+      <li>Comece por <b>Ajuda → Manual do MiguelAngelus</b> (tecla F1): ele vem junto com o programa, com fotos de cada tela.</li>
+    </ol>
+    <p class="sutil">Precisa de Windows 10 ou 11 (64 bits). As novas versões aparecem sozinhas ao abrir o programa.
+      A transmissão para o OBS usa o NDI Tools (gratuito); o resto funciona sem instalar mais nada.</p>
+  </section>
+
+  <section class="texto sobre">
     <h2 style="margin-top:0">Sobre o projeto</h2>
     <p><b>Miguel</b> + <b>Angelus</b> ("anjo", em latim): o nome é uma homenagem ao Miguel, que idealizou e criou esse projeto, e a
       São Miguel Arcanjo, cuja festa foi na semana em que o programa nasceu. O MiguelAngelus é gratuito e foi feito para uso
-      da <b>Paróquia São José Operário</b> (Rio de Janeiro) e de suas capelas.</p>
+      da <b>Paróquia São José Operário</b> (Rio de Janeiro) e de suas capelas — e está aberto para outras paróquias.</p>
     <p>Ele funciona no próprio computador, sem servidor. Quando a sincronização com o Google Drive está ligada, os arquivos
       ficam no Drive da conta da paróquia; ninguém mais tem acesso a eles. Veja a <a href="privacidade.html">política de privacidade</a>.</p>
     <p class="sutil">O código do MiguelAngelus é aberto (licença MIT) e está no GitHub: <a href="https://github.com/dobylucky78-droid/miguelangelus" target="_blank" rel="noopener">github.com/dobylucky78-droid/miguelangelus</a>.</p>
     <p class="sutil">Contato: <a href="mailto:pascom.sjo.holyrics@gmail.com">pascom.sjo.holyrics@gmail.com</a></p>
+    <h3 class="centro redes-tit">Siga a Paróquia São José Operário</h3>
+    <div class="redes">
+      <a href="https://www.instagram.com/saojoseoperarioilha/" target="_blank" rel="noopener" class="ig" aria-label="Instagram da paróquia">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>
+        @saojoseoperarioilha</a>
+      <a href="https://www.facebook.com/saojoseoperarioilha" target="_blank" rel="noopener" class="fb" aria-label="Facebook da paróquia">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.6-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21z"/></svg>
+        saojoseoperarioilha</a>
+      <a href="https://www.youtube.com/@SaoJos%C3%A9Oper%C3%A1rioIlha" target="_blank" rel="noopener" class="yt" aria-label="YouTube da paróquia">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2 27 27 0 0 0 2 12a27 27 0 0 0 .4 4.8 2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8A27 27 0 0 0 22 12a27 27 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg>
+        São José Operário Ilha</a>
+    </div>
     <div class="creditos">
       <img src="img/brasao-paroquia.webp" alt="Brasão da Paróquia São José Operário">
       <img src="img/brasao-pascom.webp" alt="PASCOM">
     </div>
-  </div>
+  </section>
 </main>
 
-<footer>MiguelAngelus · Criado por Miguel · Desenvolvido por Marcio Aurelio Rios Martins · PASCOM Paróquia São José Operário (RJ)</footer>
+<footer>MiguelAngelus · Criado por Miguel · Desenvolvido por Marcio Aurelio Rios Martins · PASCOM Paróquia São José Operário (RJ)<br>
+  <span class="pequeno">NDI® é marca registrada da Vizrt NDI AB. Windows é marca da Microsoft. Google Drive é marca do Google LLC.</span></footer>
 </body>
 </html>
