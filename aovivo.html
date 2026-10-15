@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f2347">
+<title>Ao vivo — MiguelAngelus</title>
+<meta property="og:title" content="Acompanhe a celebração ao vivo">
+<meta property="og:description" content="Os slides do telão no seu celular, tablet ou TV — MiguelAngelus, Paróquia São José Operário (RJ).">
+<meta property="og:image" content="https://pascom-sjo.github.io/img/compartilhar.png">
+<link rel="icon" href="img/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/icone-256.png">
+<style>
+  :root { --fundo: #0b0d12; --texto: #ffffff; --rotulo: #ffd166; --barra: rgba(255,255,255,.08); --sutil: rgba(255,255,255,.6); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--fundo); color: var(--texto); font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; transition: background .4s, color .4s; }
+  body { display: flex; flex-direction: column; }
+  .barra { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--barra); font-size: 14px; }
+  .barra img { width: 26px; height: 26px; border-radius: 7px; }
+  .barra .tit { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: .9; }
+  .ponto { width: 10px; height: 10px; border-radius: 50%; background: #888; flex: none; }
+  .ponto.on { background: #e0463c; box-shadow: 0 0 0 0 rgba(224,70,60,.7); animation: pulsa 1.6s infinite; }
+  @keyframes pulsa { 70% { box-shadow: 0 0 0 9px rgba(224,70,60,0); } 100% { box-shadow: 0 0 0 0 rgba(224,70,60,0); } }
+  .barra button { background: transparent; border: 1px solid var(--sutil); color: inherit; border-radius: 8px; padding: 4px 10px; font: inherit; cursor: pointer; }
+  #palco { flex: 1; position: relative; overflow: hidden; }
+  #texto { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 4vh 5vw; line-height: 1.25; white-space: normal; overflow-wrap: break-word; }
+  #texto .bloco { max-width: 100%; }
+  #rodape { text-align: center; font-size: 14px; color: var(--sutil); padding: 6px 12px 10px; min-height: 30px; }
+  .resp { font-weight: 700; }
+  .quem { color: var(--rotulo); font-weight: 700; }
+  sup { font-size: .55em; opacity: .7; margin-right: .1em; }
+  font.m-vermelho { color: #c8102e; } font.m-dourado { color: #c99a22; } font.m-azul { color: #1d6fd1; } font.m-verde { color: #2e9e4f; }
+  font.m-roxo { color: #7b3fa8; } font.m-branco { color: #fff; } font.m-preto { color: #111; }
+  body.escuro font.m-vermelho { color: #ff6b5f; } body.escuro font.m-azul { color: #6fb0ff; } body.escuro font.m-verde { color: #6fd38a; } body.escuro font.m-preto { color: #ccc; }
+  big.m-g { font-size: 1.2em; } big.m-gg { font-size: 1.45em; font-weight: 700; } small.m-pq { font-size: .8em; }
+  .espera { color: var(--sutil); font-size: 22px; line-height: 1.5; }
+  .espera b { color: var(--texto); }
+  .entrada { margin-top: 18px; display: flex; gap: 8px; justify-content: center; }
+  .entrada input { font: 700 26px/1 Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; width: 8.5em; text-align: center; padding: 10px; border-radius: 10px; border: 1px solid #555; background: #111; color: #fff; }
+  .entrada button { font: 700 18px "Segoe UI", sans-serif; padding: 10px 18px; border-radius: 10px; border: 0; background: #c99a22; color: #1b1503; cursor: pointer; }
+</style>
+</head>
+<body class="escuro">
+<div class="barra">
+  <span id="ponto" class="ponto" title="Conexão"></span>
+  <img src="img/icone-256.png" alt="">
+  <span class="tit" id="titulo">MiguelAngelus · ao vivo</span>
+  <button id="btTela" title="Tela cheia (bom para TV)">⛶</button>
+</div>
+<div id="palco"><div id="texto"><div class="bloco espera">Conectando…</div></div></div>
+<div id="rodape"></div>
+
+<script>
+// Endereço do serviço (Cloudflare Worker). Para testes: ?s=http://127.0.0.1:8790
+var SERVICO = 'https://miguelangelus-aovivo.pascom-sjo.workers.dev';
+var q = new URLSearchParams(location.search);
+var servico = (q.get('s') || SERVICO).replace(/\/+$/, '');
+var codigo = (q.get('c') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+var $ = function (id) { return document.getElementById(id); };
+var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+var RX_MARCA = /&lt;(\/?)(b|i|u|gg|g|pq|vermelho|dourado|azul|verde|roxo|branco|preto)&gt;/gi;
+function trocaMarca(_, f, t) {
+  t = t.toLowerCase();
+  if (t === 'b' || t === 'i' || t === 'u') return '<' + f + t + '>';
+  var el = 'vermelho dourado azul verde roxo branco preto'.indexOf(t) >= 0 ? 'font' : t === 'pq' ? 'small' : 'big';
+  return f ? '</' + el + '>' : '<' + el + ' class="m-' + t + '">';
+}
+// mesmo jeito do telão: P./T. coloridos, resposta do povo em negrito, marcas de cor e tamanho
+function htmlSlide(s, cfg) {
+  if (s.versos) return s.versos.map(function (v) { return '<sup>' + esc(v.n) + '</sup>' + esc(v.t); }).join(' ');
+  var povo = false;
+  var linhas = esc(s.texto || '').split('\n').map(function (l, i) {
+    var num = i === 0 && s.numerado ? /^\s*(\d+)\.\s+/.exec(l) : null;
+    if (num) return '<span class="quem">' + num[1] + '.</span> ' + l.slice(num[0].length);
+    var m = /^\s*([PTLCD])\.\s+/.exec(l), quem = '';
+    if (m) { povo = m[1] === 'T'; if (cfg.mostrarRotulos !== false) quem = '<span class="quem">' + m[1] + '.</span> '; l = l.slice(m[0].length); }
+    else if (/^\s*(—|R\.)/.test(l)) povo = true;
+    return quem + (povo ? '<span class="resp">' + l + '</span>' : l);
+  });
+  var html = linhas.join('<br>').replace(RX_MARCA, trocaMarca);
+  return s.refrao ? '<span class="resp">' + html + '</span>' : html;
+}
+// a letra fica do maior tamanho que cabe na tela (como no telão)
+function ajustar() {
+  var t = $('texto'), b = t.firstChild;
+  if (!b) return;
+  var lo = 12, hi = Math.min(innerWidth, innerHeight) * 0.16, ok = lo;
+  for (var k = 0; k < 14; k++) {
+    var m = (lo + hi) / 2; b.style.fontSize = m + 'px';
+    if (b.scrollHeight <= t.clientHeight - 8 && b.scrollWidth <= t.clientWidth) { ok = m; lo = m; } else hi = m;
+  }
+  b.style.fontSize = ok + 'px';
+}
+function tema(e) {
+  var tm = (e && e.tema) || {};
+  var r = document.documentElement.style;
+  r.setProperty('--fundo', tm.fundo || '#0b0d12'); r.setProperty('--texto', tm.texto || '#ffffff'); r.setProperty('--rotulo', tm.rotulo || '#ffd166');
+  var claro = /^#?(f|e|d)/i.test((tm.fundo || '#000').replace('#', ''));
+  document.body.className = claro ? 'claro' : 'escuro';
+  r.setProperty('--barra', claro ? 'rgba(0,0,0,.06)' : 'rgba(255,255,255,.08)');
+  r.setProperty('--sutil', claro ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.6)');
+  $('texto').style.fontFamily = tm.fonte || '';
+  $('texto').style.textTransform = tm.maiusculas ? 'uppercase' : 'none';
+  $('texto').style.fontWeight = tm.negrito ? '700' : '400';
+}
+var ultimoEstado = null;
+function mostrar(e) {
+  ultimoEstado = e;
+  tema(e);
+  $('titulo').textContent = (e && e.celebracao) || 'MiguelAngelus · ao vivo';
+  var s = e && e.slide;
+  if (!e || e.fim) $('texto').innerHTML = '<div class="bloco espera">' + (e && e.fim ? 'A transmissão terminou.<br>Obrigado por acompanhar! 🙏' : 'Aguardando a celebração começar…') + '</div>';
+  else if (!s) $('texto').innerHTML = '<div class="bloco espera">🙏</div>';
+  else $('texto').innerHTML = '<div class="bloco">' + htmlSlide(s, (e.tema || {})) + '</div>';
+  $('rodape').textContent = (s && s.rodape) || '';
+  ajustar();
+}
+function pedirCodigo(msg) {
+  $('ponto').className = 'ponto';
+  $('texto').innerHTML = '<div class="bloco espera">' + (msg ? msg + '<br>' : '') + 'Digite o <b>código da celebração</b><br>(aparece no telão, junto do QR code):' +
+    '<form class="entrada" id="formCod"><input id="cod" maxlength="12" autocomplete="off" value="' + esc(codigo) + '"><button>Entrar</button></form></div>';
+  $('texto').firstChild.style.fontSize = '';
+  $('formCod').onsubmit = function (ev) { ev.preventDefault(); codigo = $('cod').value.toUpperCase().replace(/[^A-Z0-9]/g, ''); if (codigo) { history.replaceState(null, '', '?c=' + codigo + (q.get('s') ? '&s=' + encodeURIComponent(q.get('s')) : '')); conectar(); } };
+}
+// WebSocket (na hora); se não der, pergunta o estado a cada 3 s
+// Sem código no link: tenta assim mesmo (o programa pode estar "sem código"); se o serviço pedir, aparece o campo.
+var ws = null, espera = 1000, sondando = 0, pingT = 0, motivo = '';
+var semCodigo = function () {
+  var m = motivo || (codigo ? 'Código não encontrado (ele muda a cada dia).' : '');
+  codigo = ''; motivo = ''; pedirCodigo(m);
+};
+function conectar() {
+  clearInterval(sondando); clearInterval(pingT);
+  if (!window.WebSocket) return sondar();
+  try { ws = new WebSocket(servico.replace(/^http/, 'ws') + '/ao-vivo' + (codigo ? '?c=' + codigo : '')); } catch (e) { return sondar(); }
+  var abriu = false;
+  ws.onopen = function () { abriu = true; espera = 1000; $('ponto').className = 'ponto on'; pingT = setInterval(function () { try { ws.send('ping'); } catch (e) {} }, 25000); };
+  ws.onmessage = function (m) {
+    if (m.data === 'pong') return;
+    var d; try { d = JSON.parse(m.data); } catch (e) { return; }
+    if (d.tipo === 'estado') { motivo = ''; mostrar(d.estado); }
+    if (d.tipo === 'erro' && d.erro === 'codigo') { ws.onclose = function () { clearInterval(pingT); }; semCodigo(); }
+  };
+  ws.onclose = function (ev) {
+    clearInterval(pingT); $('ponto').className = 'ponto';
+    // o código mudou (ou o link ficou aberto): tenta de novo sem código; se precisar, pede o novo
+    if (ev.code === 4004) { if (!motivo) { motivo = 'O código desta celebração mudou.'; codigo = ''; history.replaceState(null, '', q.get('s') ? '?s=' + encodeURIComponent(q.get('s')) : location.pathname); return conectar(); } return; }
+    if (!abriu && espera > 8000) return sondar();
+    setTimeout(conectar, espera); espera = Math.min(espera * 2, 15000);
+  };
+}
+function sondar() {
+  clearInterval(sondando);
+  var vez = function () {
+    fetch(servico + '/estado' + (codigo ? '?c=' + codigo : ''), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { clearInterval(sondando); return semCodigo(); }
+      $('ponto').className = 'ponto on'; motivo = '';
+      if (JSON.stringify(d.estado) !== JSON.stringify(ultimoEstado)) mostrar(d.estado);
+    }).catch(function () { $('ponto').className = 'ponto'; });
+  };
+  vez(); sondando = setInterval(vez, 3000);
+}
+// tela cheia (TV) e tela sempre acesa enquanto acompanha
+$('btTela').onclick = function () { var d = document.documentElement; (d.requestFullscreen || d.webkitRequestFullscreen || function () {}).call(d); };
+var trava = null;
+function manterAcesa() { if (navigator.wakeLock && document.visibilityState === 'visible') navigator.wakeLock.request('screen').then(function (t) { trava = t; }).catch(function () {}); }
+document.addEventListener('visibilitychange', function () { manterAcesa(); if (document.visibilityState === 'visible' && ws && ws.readyState > 1) conectar(); });
+document.addEventListener('click', manterAcesa, { once: true });
+addEventListener('resize', ajustar);
+manterAcesa();
+conectar();
+</script>
+</body>
+</html>
